@@ -1,0 +1,30 @@
+{
+  "name": "@pshershov/there",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha-pup \"test/**/*.spec.ts?(x)\""
+  },
+  "devDependencies": {
+    "@ts-tools/build": "^1.2.2",
+    "@ts-tools/webpack-loader": "^1.1.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.8",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "expect": "^24.9.0",
+    "mocha": "^6.2.2",
+    "mocha-pup": "^1.1.1",
+    "prettier": "^1.19.1",
+    "puppeteer": "^2.0.0",
+    "react-dom": "^16.12.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0"
+  }
+}
