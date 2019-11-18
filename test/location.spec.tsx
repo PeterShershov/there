@@ -4,57 +4,56 @@ import { Location, useLocation } from '../src/location';
 import { renderTestElement } from './utils';
 
 describe('location component', () => {
-	const TestLocationComponent = <Location render={location => <div>{location.pathname}</div>} />;
+    const TestLocationComponent = <Location>{location => <div>{location.pathname}</div>}</Location>;
 
-	it('returns correct pathname once path is empty', () => {
-		const HTMLElement = renderTestElement(TestLocationComponent);
+    it('returns correct pathname once path is empty', () => {
+        const HTMLElement = renderTestElement(TestLocationComponent);
+        expect(HTMLElement.innerText).toBe('/');
+    });
 
-		expect(HTMLElement.innerText).toBe('/');
-	});
+    it('returns correct pathanme once path is provided', () => {
+        window.location.href = `${window.location.hostname}/plop`;
 
-	it('returns correct pathanme once path is provided', () => {
-		window.location.href = `${window.location.hostname}/plop`;
+        const HTMLElement = renderTestElement(TestLocationComponent);
 
-		const HTMLElement = renderTestElement(TestLocationComponent);
+        expect(HTMLElement.innerText).toBe('/plop');
+    });
 
-		expect(HTMLElement.innerText).toBe('/plop');
-	});
+    it.skip('re-renders with correct path once changing URL via navigate', () => {
+        const HTMLElement = renderTestElement(TestLocationComponent);
 
-	it.skip('re-renders with correct path once changing URL via navigate', () => {
-		const HTMLElement = renderTestElement(TestLocationComponent);
+        expect(HTMLElement.innerText).toBe('/');
 
-		expect(HTMLElement.innerText).toBe('/');
+        // navigate('/plop');
 
-		// navigate('/plop');
-
-		expect(HTMLElement.innerText).toBe('/plop');
-	});
+        expect(HTMLElement.innerText).toBe('/plop');
+    });
 });
 
 describe('uselocation hook', () => {
-	const TestUseLocationHook = <div>{useLocation().pathname}</div>;
+    const TestUseLocationHook = <div>{useLocation().pathname}</div>;
 
-	it('returns correct pathname once path is empty', () => {
-		const HTMLElement = renderTestElement(TestUseLocationHook);
+    it('returns correct pathname once path is empty', () => {
+        const HTMLElement = renderTestElement(TestUseLocationHook);
 
-		expect(HTMLElement.innerText).toBe('/');
-	});
+        expect(HTMLElement.innerText).toBe('/');
+    });
 
-	it('returns correct pathanme once path is provided', () => {
-		window.location.href = `${window.location.hostname}/plop`;
+    it('returns correct pathanme once path is provided', () => {
+        window.location.href = `${window.location.hostname}/plop`;
 
-		const HTMLElement = renderTestElement(TestUseLocationHook);
+        const HTMLElement = renderTestElement(TestUseLocationHook);
 
-		expect(HTMLElement.innerText).toBe('/plop');
-	});
+        expect(HTMLElement.innerText).toBe('/plop');
+    });
 
-	it.skip('re-renders with correct path once changing URL via navigate', () => {
-		const HTMLElement = renderTestElement(TestUseLocationHook);
+    it.skip('re-renders with correct path once changing URL via navigate', () => {
+        const HTMLElement = renderTestElement(TestUseLocationHook);
 
-		expect(HTMLElement.innerText).toBe('/');
+        expect(HTMLElement.innerText).toBe('/');
 
-		// navigate('/plop');
+        // navigate('/plop');
 
-		expect(HTMLElement.innerText).toBe('/plop');
-	});
+        expect(HTMLElement.innerText).toBe('/plop');
+    });
 });

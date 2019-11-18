@@ -1,19 +1,22 @@
 import { memo, useEffect, useState } from 'react';
 import { HistoryController } from './history-controller';
 
-export const Location = memo<{ render: (location: Location) => JSX.Element }>(({ render }) => {
-	const location = useLocation();
-	return render(location);
+interface LocationProps {
+    children: (location: Location) => JSX.Element;
+}
+
+export const Location = memo<LocationProps>(({ children }) => {
+    const location = useLocation();
+    return children(location);
 });
 
 export function useLocation() {
-	const [location, setLocation] = useState<Location>(window.location);
+    const [location, setLocation] = useState<Location>(window.location);
 
-	useEffect(() => {
-		HistoryController.subscribe(setLocation);
+    useEffect(() => {
+        HistoryController.subscribe(setLocation);
+        return HistoryController.unsubscribe(setLocation);
+    }, [HistoryController, setLocation]);
 
-		return HistoryController.unsubscribe(setLocation);
-	}, [HistoryController, setLocation]);
-
-	return location;
+    return location;
 }
