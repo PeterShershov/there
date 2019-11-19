@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import { HistoryController } from './history-controller';
+import { historyController } from './history-controller';
 
 interface LocationProps {
     children: (location: Location) => JSX.Element;
@@ -12,11 +12,10 @@ export const Location = memo<LocationProps>(({ children }) => {
 
 export function useLocation() {
     const [location, setLocation] = useState<Location>(window.location);
-
     useEffect(() => {
-        HistoryController.subscribe(setLocation);
-        return HistoryController.unsubscribe(setLocation);
-    }, [HistoryController, setLocation]);
+        historyController.subscribe(setLocation);
+        return historyController.unsubscribe(setLocation);
+    }, [historyController, setLocation]);
 
     return location;
 }

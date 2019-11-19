@@ -1,58 +1,28 @@
 import expect from 'expect';
 import React from 'react';
-import { Location, useLocation } from '../src/location';
+import { link } from '../src/link';
+import { Location } from '../src/location';
 import { renderTestElement } from './utils';
 
 describe('location component', () => {
+    const initialLocation = window.location;
+
+    afterEach(() => {
+        link({ to: initialLocation.href });
+    });
     const TestLocationComponent = <Location>{location => <div>{location.pathname}</div>}</Location>;
 
     it('returns correct pathname once path is empty', () => {
         const HTMLElement = renderTestElement(TestLocationComponent);
-        expect(HTMLElement.innerText).toBe('/');
+        expect(HTMLElement.innerText).toBe(location.pathname);
     });
 
-    it('returns correct pathanme once path is provided', () => {
-        window.location.href = `${window.location.hostname}/plop`;
-
+    it('re-renders with correct path once changing URL via navigate', () => {
         const HTMLElement = renderTestElement(TestLocationComponent);
 
-        expect(HTMLElement.innerText).toBe('/plop');
-    });
+        expect(HTMLElement.innerText).toBe(location.pathname);
 
-    it.skip('re-renders with correct path once changing URL via navigate', () => {
-        const HTMLElement = renderTestElement(TestLocationComponent);
-
-        expect(HTMLElement.innerText).toBe('/');
-
-        // navigate('/plop');
-
-        expect(HTMLElement.innerText).toBe('/plop');
-    });
-});
-
-describe('uselocation hook', () => {
-    const TestUseLocationHook = <div>{useLocation().pathname}</div>;
-
-    it('returns correct pathname once path is empty', () => {
-        const HTMLElement = renderTestElement(TestUseLocationHook);
-
-        expect(HTMLElement.innerText).toBe('/');
-    });
-
-    it('returns correct pathanme once path is provided', () => {
-        window.location.href = `${window.location.hostname}/plop`;
-
-        const HTMLElement = renderTestElement(TestUseLocationHook);
-
-        expect(HTMLElement.innerText).toBe('/plop');
-    });
-
-    it.skip('re-renders with correct path once changing URL via navigate', () => {
-        const HTMLElement = renderTestElement(TestUseLocationHook);
-
-        expect(HTMLElement.innerText).toBe('/');
-
-        // navigate('/plop');
+        link({ to: '/plop' });
 
         expect(HTMLElement.innerText).toBe('/plop');
     });
